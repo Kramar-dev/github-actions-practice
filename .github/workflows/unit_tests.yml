@@ -11,7 +11,8 @@ on:
 
 jobs:
   tests:
-    if: startsWith(github.head_ref, 'feature/') && github.base_ref == 'develop' || github.head_ref == 'develop' && github.base_ref == 'main'  # Conditions for running the workflow
+    #if: startsWith(github.head_ref, 'feature/') && github.base_ref == 'develop' || github.head_ref == 'develop' &&
+    #github.base_ref == 'main'  # Conditions for running the workflow
     runs-on: ubuntu-20.04
     steps:
       - name: checkout repository
@@ -23,7 +24,7 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: install dedendencies and run tests
+      - name: install dependencies and run tests
         run: |
           ./mvnw clean test |
           echo "+++++ end of process +++++"
