@@ -1,0 +1,31 @@
+name: Unit tests
+
+on:
+  pull_request:
+    branches:
+      - 'develop'
+      - 'main'
+    paths-ignore:
+      - 'README.md'  # Optional: Ignore changes to specific files like README.md
+    types: [opened, synchronize, reopened]  # Specify the types of PR events to trigger the workflow
+
+jobs:
+  tests:
+    if: startsWith(github.head_ref, 'feature/') && github.base_ref == 'develop' || github.head_ref == 'develop' && github.base_ref == 'main'  # Conditions for running the workflow
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: install dedendencies and run tests
+        run: |
+          ./mvnw clean test |
+          echo "+++++ end of process +++++"
+        
+    
