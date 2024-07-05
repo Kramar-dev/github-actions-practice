@@ -37,5 +37,5 @@ jobs:
         
       - name: Print results
         run: |
-           grep -A 2 '\[INFO\] Results:' results.log
+           echo -e "\e[0;36m$(tail -n 1 results.log)\e[0m"
            rm results.log
