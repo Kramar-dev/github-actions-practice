@@ -38,6 +38,7 @@ jobs:
       - name: Install dependencies and run tests
         run: |
           mvn clean test | tee results.log
+          test ${PIPESTATUS[0]} -eq 0
         
       - name: Print Surefire report
         run: |
