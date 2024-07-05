@@ -14,6 +14,10 @@ public class Calc {
     }
 
     public static int onePlusThree() {
-        return 2 + 2;
+        return 1 + 3;
+    }
+
+    public static int onePlusSeven() {
+        return 1 + 7;
     }
 }
