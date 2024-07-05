@@ -2,6 +2,8 @@ package com.gd;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class OnePlusFiveTest {
 
     @Test
@@ -11,6 +13,11 @@ public class OnePlusFiveTest {
     @Test
     void dummy2() {
 
+    }
+
+    @Test
+    void testFailedCheck() {
+        assertEquals(1, Calc.onePlusThree());
     }
 
 }
