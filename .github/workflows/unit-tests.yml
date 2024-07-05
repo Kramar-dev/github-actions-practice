@@ -35,13 +35,3 @@ jobs:
           mvn clean test | tee results.log
           test ${PIPESTATUS[0]} -eq 0
         
-      - name: Print results
-        run: |
-          while IFS= read -r line; do
-            if [[ $line == *"[INFO] Results:"* ]]; then
-              echo -e "\e[0;36m$line\e[0m"
-            else
-              echo "$line"
-            fi
-          done < results.log
-          rm results.log
