@@ -37,5 +37,11 @@ jobs:
         
       - name: Print results
         run: |
-           echo -e "\e[0;36m$(grep '\[INFO\] Results:' results.log)\e[0m"
-           rm results.log
+          while IFS= read -r line; do
+            if [[ $line == *"[INFO] Results:"* ]]; then
+              echo -e "\e[0;36m$line\e[0m"
+            else
+              echo "$line"
+            fi
+          done < results.log
+          rm results.log
