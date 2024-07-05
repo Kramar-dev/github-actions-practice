@@ -8,6 +8,6 @@ public class OnePlusThreeTest {
 
     @Test
     void onePlusThree() {
-        assertEquals(5, Calc.onePlusThree());
+        assertEquals(4, Calc.onePlusThree());
     }
 }

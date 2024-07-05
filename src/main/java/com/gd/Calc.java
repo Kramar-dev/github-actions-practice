@@ -25,6 +25,8 @@ public class Calc {
     }
 
     public static int onePlusNine() {
-        return 1 + 9;
+        return 1 + 9 + 0;
     }
+
+
 }
