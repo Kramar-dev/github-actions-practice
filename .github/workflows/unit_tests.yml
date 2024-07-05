@@ -32,13 +32,12 @@ jobs:
       #- name: Print working directory
         #run: pwd
 
-      - name: List files in the repository
-        run: ls -R ./src/test/java
+      #- name: List files in the repository
+        #run: ls -R ./src/test/java
 
       - name: Install dependencies and run tests
         run: |
           mvn clean test | tee results.log
-          echo "+++++ end of process +++++"
         
       - name: Print Surefire report
         run: |
