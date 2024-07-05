@@ -29,16 +29,18 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Print working directory
-        run: pwd
+      #- name: Print working directory
+        #run: pwd
 
       - name: List files in the repository
-        run: ls -R
+        run: ls -R ./src/test/java
 
       - name: Install dependencies and run tests
         run: |
-          mvn clean test
+          mvn clean test | tee results.log
           echo "+++++ end of process +++++"
         
       - name: Print Surefire report
-        run: cat target/surefire-reports/*.txt || true
+        run: |
+           grep -A 2 '\[INFO\] Results:' results.log
+           rm results.log
