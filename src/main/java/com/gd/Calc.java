@@ -23,4 +23,8 @@ public class Calc {
     public static int onePlusEight() {
         return 1 + 8;
     }
+
+    public static int onePlusNine() {
+        return 1 + 9;
+    }
 }
