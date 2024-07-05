@@ -8,4 +8,9 @@ public class OnePlusFiveTest {
     void dummy() {
     }
 
+    @Test
+    void dummy2() {
+
+    }
+
 }
