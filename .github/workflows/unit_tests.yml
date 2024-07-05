@@ -11,8 +11,13 @@ on:
 
 jobs:
   tests:
-    #if: startsWith(github.head_ref, 'feature/') && github.base_ref == 'develop' || github.head_ref == 'develop' &&
-    #github.base_ref == 'main'  # Conditions for running the workflow
+    if: >
+      (
+        startsWith(github.head_ref, 'feature/') && github.base_ref == 'develop'
+      ) || 
+      (
+        github.head_ref == 'develop' && github.base_ref == 'main'
+      )
     runs-on: ubuntu-20.04
     steps:
       - name: checkout repository
@@ -29,4 +34,3 @@ jobs:
           mvn clean test
           echo "+++++ end of process +++++"
         
-    
