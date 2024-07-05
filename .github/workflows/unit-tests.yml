@@ -37,5 +37,5 @@ jobs:
         
       - name: Print results
         run: |
-           echo -e "\e[0;36m$(tail -n 1 results.log)\e[0m"
+           echo -e "\e[0;36m$(grep -A 3 '\[INFO\] Results:' results.log | sed -n '4p' | sed 's/^[[:space:]]*//')\e[0m"
            rm results.log
