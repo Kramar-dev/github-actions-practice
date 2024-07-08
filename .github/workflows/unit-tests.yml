@@ -35,6 +35,6 @@ jobs:
           mvn clean test | tee results.log
           test ${PIPESTATUS[0]} -eq 0
 
-      - name: Log
+      - name: Log 2
         run: |
           echo '< This is finish >'
