@@ -36,5 +36,7 @@ public class Calc {
         return 1 + 12;
     }
 
-
+    public static int onePlus13() {
+        return 1 + 13;
+    }
 }
