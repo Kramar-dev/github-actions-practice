@@ -32,5 +32,9 @@ public class Calc {
         return 1 + 11;
     }
 
+    public static int onePlus12() {
+        return 1 + 12;
+    }
+
 
 }
