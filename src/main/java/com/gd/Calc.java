@@ -28,5 +28,9 @@ public class Calc {
         return 1 + 9 + 0;
     }
 
+    public static int onePlus11() {
+        return 1 + 11;
+    }
+
 
 }
