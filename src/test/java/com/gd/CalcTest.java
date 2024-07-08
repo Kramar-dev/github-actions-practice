@@ -10,4 +10,9 @@ class CalcTest {
     void sum() {
         assertEquals(5, Calc.sum(2, 3));
     }
+
+    @Test
+    void test1() {
+        assertEquals(2, Calc.sum(1, 1));
+    }
 }
