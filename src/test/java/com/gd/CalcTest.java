@@ -9,5 +9,6 @@ class CalcTest {
     @Test
     void sum() {
         assertEquals(5, Calc.sum(2, 3));
+        assertEquals(7, Calc.sum(2, 5));
     }
 }
