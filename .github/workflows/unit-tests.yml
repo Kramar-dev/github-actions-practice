@@ -1,0 +1,48 @@
+name: Unit tests
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - main
+      - develop
+    paths-ignore:
+      - '**/*.md'
+
+jobs:
+  run-tests:
+    if: |
+      github.event.pull_request.head.ref == 'develop' && github.event.pull_request.base.ref == 'main' ||
+      startsWith(github.event.pull_request.head.ref, 'feature/') && github.event.pull_request.base.ref == 'develop'
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [11]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.java }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java }}
+
+      - name: Install dependencies
+        run: mvn install -DskipTests
+
+      - name: Run tests
+        run: mvn clean test
+
+      - name: Post test results
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "Tests passed"
+          else
+            echo "Tests failed"
+            exit 1
+          fi
