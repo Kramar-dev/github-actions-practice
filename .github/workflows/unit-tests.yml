@@ -33,7 +33,7 @@ jobs:
             echo "RUN_JOB=true" >> $GITHUB_OUTPUT
           fi
           
-       
+
   Token:
     needs: [ check-branches ]
     if: ${{ needs.check-branches.outputs.RUN_JOB == 'true' }}
