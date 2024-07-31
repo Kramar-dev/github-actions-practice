@@ -2,7 +2,7 @@ name: Unit tests
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [closed ]
     branches:
       - main
       - develop
@@ -11,7 +11,7 @@ on:
 
 jobs:
   check-branches:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       RUN_JOB: ${{ steps.check-branches.outputs.RUN_JOB }}
     steps:
@@ -23,8 +23,6 @@ jobs:
         run: |
           echo "RUN_JOB=false" >> $GITHUB_OUTPUT
           if (
-            [ "${{ github.event.pull_request.head.ref }}" == 'develop' ] &&
-            [ "${{ github.event.pull_request.base.ref }}" == 'main' ] ||
             (
               [[ "${{ github.event.pull_request.head.ref }}" == feature/* ]] ||
               [[ "${{ github.event.pull_request.head.ref }}" == Feature/* ]] ||
@@ -51,10 +49,4 @@ jobs:
         run: |
           echo "running-script"
 
-  run-tests:
-    needs: [ check-branches, Token]
-    if: ${{ needs.check-branches.outputs.RUN_JOB == 'true' }}
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+
