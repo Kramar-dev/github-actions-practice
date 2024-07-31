@@ -1,0 +1,60 @@
+name: Unit tests
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - main
+      - develop
+    paths-ignore:
+      - '**/*.md'
+
+jobs:
+  check-branches:
+    runs-on: ubuntu-20.04
+    outputs:
+      RUN_JOB: ${{ steps.check-branches.outputs.RUN_JOB }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check branches condition
+        id: check-branches
+        run: |
+          echo "RUN_JOB=false" >> $GITHUB_OUTPUT
+          if (
+            [ "${{ github.event.pull_request.head.ref }}" == 'develop' ] &&
+            [ "${{ github.event.pull_request.base.ref }}" == 'main' ] ||
+            (
+              [[ "${{ github.event.pull_request.head.ref }}" == feature/* ]] ||
+              [[ "${{ github.event.pull_request.head.ref }}" == Feature/* ]] ||
+              [[ "${{ github.event.pull_request.head.ref }}" == FEATURE/* ]]
+            ) &&
+            [ "${{ github.event.pull_request.base.ref }}" == 'develop' ]
+          ); then
+            echo "RUN_JOB=true" >> $GITHUB_OUTPUT
+          fi
+          
+       
+
+  Token:
+    needs: [ check-branches ]
+    if: ${{ needs.check-branches.outputs.RUN_JOB == 'true' }}
+    runs-on: ubuntu-latest
+    outputs:
+      DOCKER_TOKEN: ${{ steps.receive-token.outputs.DOCKER_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run script
+        run: |
+          echo "running-script"
+
+  run-tests:
+    needs: [ check-branches, Token]
+    if: ${{ needs.check-branches.outputs.RUN_JOB == 'true' }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
