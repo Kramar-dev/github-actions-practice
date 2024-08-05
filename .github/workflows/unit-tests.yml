@@ -19,7 +19,6 @@ jobs:
       - name: Force failure
         run: |
           exit 1
-        continue-on-error: true
 
       - name: Test fail condition
         if: ${{ failure() }}
