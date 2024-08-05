@@ -2,7 +2,7 @@ name: Unit tests
 
 on:
   pull_request:
-    types: [closed ]
+    types: [closed, synchronize, opened ]
     branches:
       - main
       - develop
@@ -10,43 +10,22 @@ on:
       - '**/*.md'
 
 jobs:
-  check-branches:
+  Test:
     runs-on: ubuntu-latest
-    outputs:
-      RUN_JOB: ${{ steps.check-branches.outputs.RUN_JOB }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Check branches condition
-        id: check-branches
+      - name: Force failure
         run: |
-          echo "RUN_JOB=false" >> $GITHUB_OUTPUT
-          if (
-            (
-              [[ "${{ github.event.pull_request.head.ref }}" == feature/* ]] ||
-              [[ "${{ github.event.pull_request.head.ref }}" == Feature/* ]] ||
-              [[ "${{ github.event.pull_request.head.ref }}" == FEATURE/* ]]
-            ) &&
-            [ "${{ github.event.pull_request.base.ref }}" == 'develop' ]
-          ); then
-            echo "RUN_JOB=true" >> $GITHUB_OUTPUT
-          fi
-          
-       
+          exit 1
 
-  Token:
-    needs: [ check-branches ]
-    if: ${{ needs.check-branches.outputs.RUN_JOB == 'true' }}
-    runs-on: ubuntu-latest
-    outputs:
-      DOCKER_TOKEN: ${{ steps.receive-token.outputs.DOCKER_TOKEN }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run script
+      - name: Test fail condition
+        if: ${{ failure() }}
         run: |
-          echo "running-script"
+          echo "Job failed"
 
-
+      - name: Test ok condition
+        if: ${{ success() }}
+        run: |
+          echo "Job OK"
